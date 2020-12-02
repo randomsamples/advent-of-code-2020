@@ -20,13 +20,9 @@ def report_repair_1(xs: List[int]) -> Optional[int]:
 # Approximately O(N^2 + logN)
 def report_repair_2(xs: List[int]) -> Optional[int]:
     """
-    Runs a similar algorithm for three elements. The lower element xs[i]
-    begins at elemtent 0, but the upper element xs[j] is given as
-    a subcomputation which finds the two elements in an upper range which
-    are closest to the value [TARGET - xs[i]] (the remainder). The upper range
-    thus needs at least two elements and begins at element len(xs) - 2.
-    This upper range is then used as a sub-array to find the two elements that
-    come closest to the remainder. The j index is then adjusted as usual.
+    Runs a similar algorithm for three elements. First the array is sorted, then
+    The lower element xs[i] begins at element 0 and sweeps up (O(N)), we call
+    find_pair_with_sum_closest_to on the rest of the upper part of the array (O(N)).
     """
     TARGET = 2020
     xs.sort()
@@ -52,7 +48,7 @@ def find_pair_with_sum_closest_to(
     """
     Given an array, start and end indices, return the sum s and two elements
     xi and xj such that xi + xj are closest in abosulte difference to the
-    target. start must be smaller than end.
+    target. start must be less than than end.
     """
     assert start < end
     i = start
