@@ -1,6 +1,6 @@
-from advent2020.day1 import report_repair_1
-from advent2020.day1 import report_repair_2
-from assertpy import assert_that
+from assertpy import assert_that  # type: ignore
+
+from advent2020.day1 import report_repair_1, report_repair_2
 
 
 def test_day1_1():
