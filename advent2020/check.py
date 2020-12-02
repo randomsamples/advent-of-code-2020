@@ -11,3 +11,4 @@ run("poetry run isort .")
 run("poetry run black .")
 run("poetry run flake8 .")  # run it again in case black messed something up
 run("poetry run mypy .")
+run("poetry run pytest")
