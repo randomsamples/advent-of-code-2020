@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Iterable
 
 
 @dataclass
@@ -62,3 +62,22 @@ def parse_input_row(string: str) -> Tuple[PasswordPolicy, str]:
     password = tokens[1]
     policy = PasswordPolicy.parse(tokens[0])
     return (policy, password)
+
+
+def parse_and_check_strings(lines: Iterable[str]) -> int:
+    check_us = list(map(parse_input_row, lines))
+    results = list(map(lambda e: e[0].check_password(e[1]), check_us))
+    valid_count = sum(results)
+    return valid_count
+
+
+def main():
+    with open("data/day2/input.txt") as f:
+        lines = f.readlines()
+        check_us = list(filter(lambda val: val is not None and val != "", lines))
+
+    print(f"Part 1: {parse_and_check_strings(check_us)}")
+
+
+if __name__ == "__main__":
+    main()

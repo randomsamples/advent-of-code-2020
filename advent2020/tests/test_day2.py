@@ -3,7 +3,7 @@ import textwrap
 from assertpy import assert_that  # type: ignore
 from pytest import raises
 
-from advent2020.day2 import PasswordPolicy, parse_input_row
+from advent2020.day2 import PasswordPolicy, parse_input_row, parse_and_check_strings
 
 
 def test_password_policy_parse():
@@ -44,7 +44,5 @@ def test_day2_1():
     )
 
     clean = list(filter(lambda val: val is not None and val != "", input.splitlines()))
-    check_us = list(map(parse_input_row, clean))
-    results = list(map(lambda e: e[0].check_password(e[1]), check_us))
-    valid_count = sum(results)
+    valid_count = parse_and_check_strings(clean)
     assert_that(valid_count).is_equal_to(2)
