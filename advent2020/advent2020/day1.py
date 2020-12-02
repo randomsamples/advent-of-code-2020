@@ -8,7 +8,7 @@ def report_repair_1(xs):
     """
     TARGET = 2020
     xs.sort
-    (s, a, b) = find_pair_that_equals(xs, 0, len(xs) - 1, TARGET)
+    (s, a, b) = find_pair_with_sum_closest_to(xs, 0, len(xs) - 1, TARGET)
     if s == TARGET:
         return a * b
     else:
@@ -25,7 +25,7 @@ def report_repair_2(xs):
         for j in range(len(xs) - 2, i, -1):
             a = xs[i]
             remainder = TARGET - a
-            (s, b, c) = find_pair_that_equals(xs, j, len(xs) - 1, remainder)
+            (s, b, c) = find_pair_with_sum_closest_to(xs, j, len(xs) - 1, remainder)
 
             if s == remainder:
                 assert a + b + c == TARGET
@@ -39,7 +39,7 @@ def report_repair_2(xs):
 
 
 # Aproximately O(N)
-def find_pair_that_equals(xs, start, end, target):
+def find_pair_with_sum_closest_to(xs, start, end, target):
     """
     Given an array, start and end indices, return the sum s and two elements
     xi and xj such that xi + xj are closest in abosulte difference to the
