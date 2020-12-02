@@ -1,34 +1,78 @@
 # --- Day 1: Report Repair ---
-# After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island.
-# Surely, Christmas will go on without you.
 
-# The tropical island has its own currency and is entirely cash-only. The gold coins used there have a little picture of a starfish;
-# the locals just call them stars. None of the currency exchanges seem to have heard of them, but somehow, you'll need to find fifty
-# of these coins by the time you arrive so you can pay the deposit on your room.
-
-# To save your vacation, you need to get all fifty stars by December 25th.
-
-# Collect stars by solving puzzles. Two puzzles will be made available on each day in the Advent calendar;
-# the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
-
-# Before you leave, the Elves in accounting just need you to fix your expense report (your puzzle input);
-# apparently, something isn't quite adding up.
-
-# Specifically, they need you to find the two entries that sum to 2020 and then multiply those two numbers together.
-
-# For example, suppose your expense report contained the following:
-
-# 1721
-# 979
-# 366
-# 299
-# 675
-# 1456
-# In this list, the two entries that sum to 2020 are 1721 and 299. Multiplying them together produces 1721 * 299 = 514579,
-# so the correct answer is 514579.
-
-# Of course, your expense report is much larger. Find the two entries that sum to 2020; what do you get if you multiply them together?
+# Approximately O(N + logN)
+def report_repair_1(xs):
+    """
+    Simply calls through to find_pair_that_equals to find the closest sum to
+    the target. If its equal it is returned, else None is returned
+    """
+    TARGET = 2020
+    xs.sort
+    (s, a, b) = find_pair_that_equals(xs, 0, len(xs) - 1, TARGET)
+    if s == TARGET:
+        return a * b
+    else:
+        return None
 
 
-def report_repair(expenses):
-    return 50
+# Approximately O(N^2 + logN)
+def report_repair_2(xs):
+    """"""
+    TARGET = 2020
+    xs.sort()
+    s = None
+    for i in range(0, len(xs) - 1):
+        for j in range(len(xs) - 2, i, -1):
+            a = xs[i]
+            remainder = TARGET - a
+            (s, b, c) = find_pair_that_equals(xs, j, len(xs) - 1, remainder)
+
+            if s == remainder:
+                assert a + b + c == TARGET
+                return a * b * c
+            elif s < TARGET:  # too low, increment i
+                break
+            else:  # s > TARGET, too high decrement j
+                pass
+
+    return None
+
+
+# Aproximately O(N)
+def find_pair_that_equals(xs, start, end, target):
+    """
+    Given an array, start and end indices, return the sum s and two elements
+    xi and xj such that xi + xj are closest in abosulte difference to the
+    target. Sum may be return as None if not enough elements exist.
+    """
+    assert start < end
+    s = None
+    xi = 0
+    xj = 0
+    for i in range(start, end):
+        for j in range(end, start, -1):
+            xi = xs[i]
+            xj = xs[j]
+            s = xi + xj
+
+            if s == target:
+                return s, xs[i], xs[j]
+            elif s < target:  # too low, increment i
+                break
+            else:  # s > target, too high decrement j
+                pass
+
+    return s, xi, xj
+
+
+def main():
+    with open("data/day1/input.txt") as f:
+        lines = f.readlines()
+        expenses = list(map(int, lines))
+
+    print(f"Part 1: {report_repair_1(expenses)}")
+    print(f"Part 2: {report_repair_2(expenses)}")
+
+
+if __name__ == "__main__":
+    main()
