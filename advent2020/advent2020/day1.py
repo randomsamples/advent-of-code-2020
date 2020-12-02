@@ -17,7 +17,15 @@ def report_repair_1(xs):
 
 # Approximately O(N^2 + logN)
 def report_repair_2(xs):
-    """"""
+    """
+    Runs a similar algorithm for three elements. The lower element xs[i]
+    begins at elemtent 0 as usual, but the upper element xs[j] is given as
+    a subcomputation which finds the two elements in an upper range which
+    are closest to the value TARGET - xs[i] (the remainder). The upper range
+    thus needs at least two elements and begins at element len(xs) - 2.
+    This upper range is then usd as a sub array to find the two elements that
+    come closest to the remainder. The j index is then adjusted as usual.
+    """
     TARGET = 2020
     xs.sort()
     s = None
